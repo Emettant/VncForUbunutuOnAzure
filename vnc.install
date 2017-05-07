@@ -7,21 +7,28 @@ sudo apt-get install xfce4 xfce4-goodies tightvncserver
 umask 0077                                        # use safe default permissions
 mkdir -p "$HOME/.vnc"                             # create config directory
 chmod go-rwx "$HOME/.vnc"                         # enforce safe permissions
-vncpasswd -f <<<"$VNCPASSWD" >"$HOME/.vnc/passwd"  # generate and write a password
+sudo vncpasswd -f <<<$VNCPASSWD >"$HOME/.vnc/passwd"  # generate and write a password
 
 vncserver
-vncserver -kill :1
-vncserver -kill :2
-vncserver -kill :3
-vncserver -kill :4
-mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+sudo vncserver -kill :1
+#vncserver -kill :2
+#vncserver -kill :3
+#vncserver -kill :4
+sudo mv $HOME/.vnc/xstartup $HOME/.vnc/xstartup.bak
+sudo touch $HOME/.vnc/xstartup
 
-touch ~/.vnc/xstartup
+echo "sudo chmod +x $HOME/.vnc/xstartup"
+sudo chmod +777 $HOME/.vnc/xstartup 
+
+echo "#!/bin/sh" >> $HOME/.vnc/xstartup
+echo "xrdb $HOME/.Xresources" >> $HOME/.vnc/xstartup
+#echo "xsetroot -solid grey" >> $HOME/.vnc/xstartup
+echo "startxfce4 &" >> $HOME/.vnc/xstartup
 
 cp ./init.d_vncserver /etc/init.d/vncserver
-sudo chmod +x /etc/init.d/vncserver
+sudo chmod +777 /etc/init.d/vncserver
 sudo service vncserver start
 netstat -alpn | grep :5901
 echo "================================================================="
 echo "if you see 127.0.0.1:5901 then everything is configured corretly!"
-
+echo "Setup ssh tunnel localhost:5901 to 5901 and connect to localhost:5901 with TightVNC."

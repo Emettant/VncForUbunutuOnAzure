@@ -1,4 +1,4 @@
-Setup VNC server on Azure Ubuntu 14 Virtual Machine
+How to setup VNC server (remote desktop to Linux) on Azure Ubuntu 14 Virtual Machine
 ==
 #1. Create credentials
 
@@ -7,12 +7,8 @@ Setup VNC server on Azure Ubuntu 14 Virtual Machine
     VNCUSER=
     VNCPASSWD=
 
-#2. Give permissions to execute
-
-    chmod +x vnc.install
-
-#3. Run the script
+#2. Run the script
     
-    ./vnc.install
+    sudo ./vnc.install
 
-#4. Follow instructions for connection with Putty, by using tunnels. E.g.[this](https://www.digitalocean.com/community/tutorials/how-to-setup-vnc-for-ubuntu-12).
+#3. Follow instructions for connection with Putty, by using tunnels. E.g.[this](https://www.digitalocean.com/community/tutorials/how-to-setup-vnc-for-ubuntu-12). Setup ssh tunnel localhost:5901 to 5901 and connect to localhost:5901 with TightVNC.
